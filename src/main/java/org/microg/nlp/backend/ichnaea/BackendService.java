@@ -75,7 +75,7 @@ public class BackendService extends HelperLocationBackendService
     }
 
     @Override
-    public synchronized boolean canRun() {
+    public boolean canRun() {
         long delay = RATE_LIMIT_MS_FLOOR + (RATE_LIMIT_MS_PADDING * expBackoffFactor);
         return (lastRequestTime + delay < System.currentTimeMillis());
     }
@@ -102,7 +102,7 @@ public class BackendService extends HelperLocationBackendService
     }
 
     @Override
-    public synchronized void resultCallback(Location locationResult) {
+    public void resultCallback(Location locationResult) {
         if (locationResult == null) {
             if (lastResponse == null) {
                 // There isn't even a lastResponse to work with
@@ -186,7 +186,7 @@ public class BackendService extends HelperLocationBackendService
         return super.update();
     }
 
-    private synchronized void startCalculate() {
+    private void startCalculate() {
         final Set<WiFi> wiFis = this.wiFis;
         final Set<Cell> cells = this.cells;
         if ((cells == null || cells.isEmpty()) && (wiFis == null || wiFis.size() < 2)) return;
