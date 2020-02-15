@@ -44,8 +44,8 @@ public class BackendService extends HelperLocationBackendService
     private static final String TAG = "IchnaeaBackendService";
     private static final String SERVICE_URL = "https://location.services.mozilla.com/v1/geolocate?key=%s";
     private static final String API_KEY = "068ab754-c06b-473d-a1e5-60e7b1a2eb77";
-    private static final long RATE_LIMIT_MS_FLOOR = 60000;
-    private static final long RATE_LIMIT_MS_PADDING = 10000;
+    private static final long RATE_LIMIT_MS_FLOOR = 20000;
+    private static final long RATE_LIMIT_MS_PADDING = 15000;
     private static final long RATE_LIMIT_MS_SEQUENCIAL = 1000;
     private static final long RACE_CONDITION_TIMEOUT = 4000;
     private static final String PROVIDER = "ichnaea";
@@ -88,7 +88,7 @@ public class BackendService extends HelperLocationBackendService
     public synchronized void extendBackoff() {
         if (expBackoffFactor == 0) {
             expBackoffFactor = 1;
-        } else if (expBackoffFactor > 0 && expBackoffFactor < 1024) {
+        } else if (expBackoffFactor > 0 && expBackoffFactor < 8) {
             expBackoffFactor *= 2;
         }
     }
